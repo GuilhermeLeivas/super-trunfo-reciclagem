@@ -1,16 +1,20 @@
 package br.com.leivas.supertrunforeciclagem.model;
 
-import java.util.List;
+import java.util.Stack;
 
 public class Baralho {
 
-    private final List<Carta> cartas;
+    private final Stack<Carta> cartas;
 
-    public Baralho(List<Carta> cartas) {
+    public Baralho(Stack<Carta> cartas) {
         this.cartas = cartas;
     }
 
     public Carta selecionarCarta() {
         return null;
+    }
+
+    public Stack<Carta> getCartas() {
+        return cartas;
     }
 }

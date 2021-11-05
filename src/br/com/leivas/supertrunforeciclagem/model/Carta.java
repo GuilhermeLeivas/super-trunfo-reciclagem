@@ -2,6 +2,9 @@ package br.com.leivas.supertrunforeciclagem.model;
 
 import java.io.Serializable;
 
+/**
+ * Classe que representa uma carta no sistema
+ */
 public abstract class Carta implements Serializable {
 
     public enum Cor {
