@@ -11,7 +11,11 @@ public class Baralho {
     }
 
     public Carta selecionarCarta() {
-        return null;
+        return this.cartas.peek();
+    }
+
+    public int tamanhoBaralho() {
+        return this.cartas.size();
     }
 
     public Stack<Carta> getCartas() {

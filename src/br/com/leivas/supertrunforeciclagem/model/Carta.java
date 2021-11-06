@@ -1,5 +1,7 @@
 package br.com.leivas.supertrunforeciclagem.model;
 
+import br.com.leivas.supertrunforeciclagem.util.CorUtil;
+
 import java.io.Serializable;
 
 /**
@@ -8,9 +10,18 @@ import java.io.Serializable;
 public abstract class Carta implements Serializable {
 
     public enum Cor {
-        VERDE("verde"), CINZA("cinza"), LARANJA("laranja"), VERMELHO("vermelho"),
-        AZUL("azul"), AMARELO("amarelo"), MARROM("marrom"), ROXO("roxo"),
-        BRANCO("branco"), PRETO("preto"), MAIOR("maior"), MENOR("menor"),
+        MENOR("menor"),
+        ROXO("roxo"),
+        BRANCO("branco"),
+        PRETO("preto"),
+        LARANJA("laranja"),
+        CINZA("cinza"),
+        MARROM("marrom"),
+        VERDE("verde"),
+        AMARELO("amarelo"),
+        VERMELHO("vermelho"),
+        AZUL("azul"),
+        MAIOR("maior"),
         INDEFINIDA("indefinida");
 
         private final String cor;
@@ -26,21 +37,51 @@ public abstract class Carta implements Serializable {
 
     }
 
-    private Integer codigo;
+    private String codigo;
     private String nome;
     private String descricao;
     private String tipo;
     private Cor cor;
     private Double decomposicao;
     private Integer ataque;
+    private static CorUtil corUtil;
+
+    public Carta(String codigo, String nome, String descricao, String tipo, Cor cor, Double decomposicao, Integer ataque) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.tipo = tipo;
+        this.cor = cor;
+        this.decomposicao = decomposicao;
+        this.ataque = ataque;
+    }
 
     public abstract boolean ehReciclavel();
 
-    public Integer getCodigo() {
+    public int compareToTipo(Carta carta) {
+        if (corUtil == null) {
+            corUtil = new CorUtil();
+        }
+        return corUtil.compareCores(this.getCor(), carta.getCor());
+    }
+
+    public int compareToDecomposicao(Carta carta) {
+        return this.decomposicao.compareTo(carta.getDecomposicao());
+    }
+
+    public int compareToEhReciclavel(Carta carta) {
+        return this.ehReciclavel() && carta.ehReciclavel() ? 0 : this.ehReciclavel() ? 1 : -1;
+    }
+
+    public int compareToAtaque(Carta carta) {
+        return this.ataque.compareTo(carta.getAtaque());
+    }
+
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

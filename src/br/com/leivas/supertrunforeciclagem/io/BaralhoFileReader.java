@@ -4,8 +4,7 @@ import br.com.leivas.supertrunforeciclagem.model.Baralho;
 
 public class BaralhoFileReader {
 
-
-    public Baralho readBaralhoFile() {
+    public static Baralho readBaralhoFile() {
         return null;
     }
 }
