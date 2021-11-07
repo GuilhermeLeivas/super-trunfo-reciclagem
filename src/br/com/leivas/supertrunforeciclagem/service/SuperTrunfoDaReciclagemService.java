@@ -5,20 +5,16 @@ import br.com.leivas.supertrunforeciclagem.io.BaralhoFileReader;
 import br.com.leivas.supertrunforeciclagem.model.Baralho;
 import br.com.leivas.supertrunforeciclagem.model.Carta;
 import br.com.leivas.supertrunforeciclagem.model.Jogador;
+import br.com.leivas.supertrunforeciclagem.model.Rodada;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SuperTrunfoDaReciclagemService {
-
-    public enum TipoJogada {
-        TIPO,
-        DECOMPOSICAO,
-        RECICLAVEL,
-        ATAQUE
-    }
 
     public enum StatusJogo {
         NAO_INICIADO,
@@ -28,17 +24,24 @@ public class SuperTrunfoDaReciclagemService {
 
     private Jogador jogador1;
     private Jogador jogador2;
+    private Jogador vencedorPartida;
     private Baralho baralho;
+    private List<Rodada> rodadas;
     private StatusJogo statusJogo = StatusJogo.NAO_INICIADO;
-    private Jogador vencedor;
 
-    public void iniciaJogo(String nomeJogador1, String nomeJogador2) {
+    public void iniciaJogo(String nomeJogador1, String nomeJogador2, Rodada.TipoRodada tipoPrimeiraRodada) {
         try {
             this.baralho = BaralhoFileReader.readBaralhoFile();
             int numeroDeCartas = this.baralho.getCartas().size();
             int numeroDeCartasPorJogador = numeroDeCartas / 2;
             this.jogador1 = new Jogador(nomeJogador1, this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
             this.jogador2 = new Jogador(nomeJogador2, this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
+            Rodada primeiraRodada = new Rodada();
+            primeiraRodada.setTipoRodada(tipoPrimeiraRodada);
+            if (this.rodadas == null) {
+                this.rodadas = new ArrayList<>();
+                this.rodadas.add(primeiraRodada);
+            }
             this.statusJogo = StatusJogo.EM_ANDAMENTO;
 
         } catch (Exception ex) {
@@ -46,9 +49,10 @@ public class SuperTrunfoDaReciclagemService {
         }
     }
 
-    public int proximaJogada(TipoJogada tipoJogada) {
+    public int proximaJogada(Rodada.TipoRodada tipoRodada) {
+        final Rodada ultimaRodada = this.ultimaRodada();
         int result = 0;
-        switch (tipoJogada) {
+        switch (tipoRodada) {
             case TIPO -> {
                 result = this.jogador1.getCartas().element().compareToTipo(this.jogador2.getCartas().element());
             }
@@ -62,6 +66,7 @@ public class SuperTrunfoDaReciclagemService {
                 result = this.jogador1.getCartas().element().compareToAtaque(this.jogador2.getCartas().element());
             }
         }
+        ultimaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
         return result;
     }
 
@@ -70,7 +75,7 @@ public class SuperTrunfoDaReciclagemService {
         boolean jogador2TemTodasCartas = this.jogador2.numeroDeCartas() == this.baralho.tamanhoBaralho();
         if (jogador1TemTodasCartas || jogador2TemTodasCartas) {
             this.statusJogo = StatusJogo.FINALIZADO;
-            this.vencedor = jogador1TemTodasCartas ? jogador1 : jogador2;
+            this.vencedorPartida = jogador1TemTodasCartas ? jogador1 : jogador2;
         }
     }
 
@@ -80,6 +85,10 @@ public class SuperTrunfoDaReciclagemService {
             cartasJogador.add(baralho.getCartas().get(i));
         }
         return cartasJogador;
+    }
+
+    private Rodada ultimaRodada() {
+        return this.rodadas.get(this.rodadas.size() - 1);
     }
 
     public Jogador getJogador1() {
@@ -98,7 +107,7 @@ public class SuperTrunfoDaReciclagemService {
         return statusJogo;
     }
 
-    public Jogador getVencedor() {
-        return vencedor;
+    public Jogador getVencedorPartida() {
+        return vencedorPartida;
     }
 }
