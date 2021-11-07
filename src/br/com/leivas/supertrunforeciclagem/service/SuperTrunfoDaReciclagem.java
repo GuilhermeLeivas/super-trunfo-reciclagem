@@ -33,6 +33,7 @@ public class SuperTrunfoDaReciclagem {
     private Jogador vencedorPartida;
     private Baralho baralho;
     private List<Rodada> rodadas;
+    private List<Carta> cartasNaMesa;
     private StatusJogo statusJogo = StatusJogo.NAO_INICIADO;
 
     /**
@@ -130,6 +131,14 @@ public class SuperTrunfoDaReciclagem {
 
     public Baralho getBaralho() {
         return baralho;
+    }
+
+    public List<Rodada> getRodadas() {
+        return rodadas;
+    }
+
+    public List<Carta> getCartasNaMesa() {
+        return cartasNaMesa;
     }
 
     public StatusJogo getStatusJogo() {
