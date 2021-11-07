@@ -4,7 +4,7 @@ import br.com.leivas.supertrunforeciclagem.main.SuperTrunfoDaReciclagemMain;
 import br.com.leivas.supertrunforeciclagem.model.Baralho;
 import br.com.leivas.supertrunforeciclagem.model.Carta;
 import br.com.leivas.supertrunforeciclagem.model.CartaReciclavel;
-import br.com.leivas.supertrunforeciclagem.model.CartaoNaoReciclavel;
+import br.com.leivas.supertrunforeciclagem.model.CartaNaoReciclavel;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -82,10 +82,22 @@ public class BaralhoFileReader {
             boolean ehReciclavel = Boolean.parseBoolean(lineSplitted[7]);
             carta = ehReciclavel ?
                     new CartaReciclavel(codigo, nome, descricao, tipo, cor, decomposicao, ataque) :
-                    new CartaoNaoReciclavel(codigo, nome, descricao, tipo, cor, decomposicao, ataque);
+                    new CartaNaoReciclavel(codigo, nome, descricao, tipo, cor, decomposicao, ataque);
             cartasBaralho.add(carta);
         });
         baralho = new Baralho(cartasBaralho);
         return baralho;
+    }
+
+    private void teste(Carta carta) {
+        switch (carta) {
+            case CartaNaoReciclavel cn -> {
+
+            }
+            case CartaReciclavel cr -> {
+                
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + carta);
+        }
     }
 }
