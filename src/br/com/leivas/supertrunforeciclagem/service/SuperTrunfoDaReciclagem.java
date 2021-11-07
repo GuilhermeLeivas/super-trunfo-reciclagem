@@ -1,6 +1,6 @@
 package br.com.leivas.supertrunforeciclagem.service;
 
-import br.com.leivas.supertrunforeciclagem.SuperTrunfoDaReciclagem;
+import br.com.leivas.supertrunforeciclagem.main.SuperTrunfoDaReciclagemMain;
 import br.com.leivas.supertrunforeciclagem.io.BaralhoFileReader;
 import br.com.leivas.supertrunforeciclagem.model.Baralho;
 import br.com.leivas.supertrunforeciclagem.model.Carta;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * CLasse que representa o funcionamento do jogo, suas regras e suas etapas.
  */
-public class SuperTrunfoDaReciclagemService {
+public class SuperTrunfoDaReciclagem {
 
     /**
      * Enum que representa o status atual do jogo.
@@ -63,7 +63,7 @@ public class SuperTrunfoDaReciclagemService {
             this.statusJogo = StatusJogo.EM_ANDAMENTO;
 
         } catch (Exception ex) {
-            Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
+            Logger.getLogger(SuperTrunfoDaReciclagemMain.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
         }
     }
 

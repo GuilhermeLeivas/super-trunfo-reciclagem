@@ -1,11 +1,11 @@
-package br.com.leivas.supertrunforeciclagem;
+package br.com.leivas.supertrunforeciclagem.main;
 
 import br.com.leivas.supertrunforeciclagem.io.BaralhoFileReader;
 
 /**
  * Classe main do sistema.
  */
-public class SuperTrunfoDaReciclagem {
+public class SuperTrunfoDaReciclagemMain {
 
     public static void main(String[] args) {
 

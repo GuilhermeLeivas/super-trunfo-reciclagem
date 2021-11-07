@@ -1,6 +1,6 @@
 package br.com.leivas.supertrunforeciclagem.io;
 
-import br.com.leivas.supertrunforeciclagem.SuperTrunfoDaReciclagem;
+import br.com.leivas.supertrunforeciclagem.main.SuperTrunfoDaReciclagemMain;
 import br.com.leivas.supertrunforeciclagem.model.Baralho;
 import br.com.leivas.supertrunforeciclagem.model.Carta;
 import br.com.leivas.supertrunforeciclagem.model.CartaReciclavel;
@@ -44,7 +44,7 @@ public class BaralhoFileReader {
             Baralho baralho = this.convertFileToBaralho(lines);
             baralho.getCartas().forEach(System.out::println);
         } catch (IOException ex) {
-            Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.SEVERE, String.format("Falha ler arquivo do baralho %s", ex.getMessage()));
+            Logger.getLogger(SuperTrunfoDaReciclagemMain.class.getName()).log(Level.SEVERE, String.format("Falha ler arquivo do baralho %s", ex.getMessage()));
         }
         return null;
     }
