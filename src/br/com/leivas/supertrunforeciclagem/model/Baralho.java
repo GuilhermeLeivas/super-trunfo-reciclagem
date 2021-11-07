@@ -2,6 +2,9 @@ package br.com.leivas.supertrunforeciclagem.model;
 
 import java.util.Stack;
 
+/**
+ * Classe que representa um baralho de cartas no sistema.
+ */
 public class Baralho {
 
     private final Stack<Carta> cartas;

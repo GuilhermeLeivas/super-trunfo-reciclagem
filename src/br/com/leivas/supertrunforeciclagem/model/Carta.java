@@ -5,7 +5,7 @@ import br.com.leivas.supertrunforeciclagem.util.CorUtil;
 import java.io.Serializable;
 
 /**
- * Classe que representa uma carta no sistema
+ * Classe que representa uma carta abstrata no sistema
  */
 public abstract class Carta implements Serializable {
 
@@ -56,8 +56,21 @@ public abstract class Carta implements Serializable {
         this.ataque = ataque;
     }
 
+    /**
+     * Método que diz se a carta é do tipo reciclavel ou não
+     *
+     * @return true para sim, false para não
+     */
     public abstract boolean ehReciclavel();
 
+    /**
+     * Compara o tipo entre duas cartas
+     * isso é feito comparando suas cores.
+     *
+     * @param carta carta para comparar
+     * @return 1 se a carta dessa instancia for maior que o @param carta
+     * 0 se forem iguais e -1 se o @param carta for maior.
+     */
     public int compareToTipo(Carta carta) {
         if (corUtil == null) {
             corUtil = new CorUtil();
@@ -65,14 +78,35 @@ public abstract class Carta implements Serializable {
         return corUtil.compareCores(this.getCor(), carta.getCor());
     }
 
+    /**
+     * Compara a decomposicao entre duas cartas
+     *
+     * @param carta carta para comparar
+     * @return 1 se a carta dessa instancia for maior que o @param carta
+     * 0 se forem iguais e -1 se o @param carta for maior.
+     */
     public int compareToDecomposicao(Carta carta) {
         return this.decomposicao.compareTo(carta.getDecomposicao());
     }
 
+    /**
+     * Compara se ehReciclavel entre duas cartas
+     *
+     * @param carta carta para comparar
+     * @return 1 se a carta dessa instancia for maior que o @param carta
+     * 0 se forem iguais e -1 se o @param carta for maior.
+     */
     public int compareToEhReciclavel(Carta carta) {
         return this.ehReciclavel() && carta.ehReciclavel() ? 0 : this.ehReciclavel() ? 1 : -1;
     }
 
+    /**
+     * Compara o ataque entre duas cartas
+     *
+     * @param carta carta para comparar
+     * @return 1 se a carta dessa instancia for maior que o @param carta
+     * 0 se forem iguais e -1 se o @param carta for maior.
+     */
     public int compareToAtaque(Carta carta) {
         return this.ataque.compareTo(carta.getAtaque());
     }

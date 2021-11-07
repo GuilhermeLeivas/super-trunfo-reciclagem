@@ -1,5 +1,8 @@
 package br.com.leivas.supertrunforeciclagem.model;
 
+/**
+ * Classe que representa cada rodada do jogo no sistema.
+ */
 public class Rodada {
 
     public enum TipoRodada {

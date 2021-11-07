@@ -2,6 +2,9 @@ package br.com.leivas.supertrunforeciclagem.model;
 
 import java.util.Queue;
 
+/**
+ * Classe que representa um jogador no sistema
+ */
 public class Jogador {
 
     private final String nome;

@@ -16,6 +16,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+/**
+ * Singleton na aplicação.
+ * Utilizado para fazer a leitura do arquivo
+ * e montar uma instancia de Baralho, para ser utilizada
+ * no jogo.
+ */
 public class BaralhoFileReader {
 
     private static final String fileSrc = "resources/Baralho.csv";
@@ -26,7 +32,12 @@ public class BaralhoFileReader {
 
     }
 
-
+    /**
+     * Método responsável por fazer a leitura do arquivo
+     * que contém os dados necessários para montar um Baralho.
+     *
+     * @return Um novo Baralho.
+     */
     public Baralho readBaralhoFile() {
         Path path = Paths.get(fileSrc);
         try (final Stream<String> lines = Files.lines(path)) {
@@ -38,6 +49,9 @@ public class BaralhoFileReader {
         return null;
     }
 
+    /**
+     * @return Retorna a instance desse Singleton
+     */
     public static BaralhoFileReader getInstance() {
         if (instance == null) {
             instance = new BaralhoFileReader();
@@ -45,6 +59,13 @@ public class BaralhoFileReader {
         return instance;
     }
 
+    /**
+     * Método responsável por fazer a conversão dos
+     * dados crus do arquivo para objetos do Tipo Carta.
+     *
+     * @param fileLines Dados do arquivo
+     * @return O novo Baralho
+     */
     private Baralho convertFileToBaralho(Stream<String> fileLines) {
         Baralho baralho;
         Stack<Carta> cartasBaralho = new Stack<>();
