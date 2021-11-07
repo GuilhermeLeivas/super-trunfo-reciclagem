@@ -88,16 +88,4 @@ public class BaralhoFileReader {
         baralho = new Baralho(cartasBaralho);
         return baralho;
     }
-
-    private void teste(Carta carta) {
-        switch (carta) {
-            case CartaNaoReciclavel cn -> {
-
-            }
-            case CartaReciclavel cr -> {
-                
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + carta);
-        }
-    }
 }
