@@ -54,18 +54,14 @@ public class SuperTrunfoDaReciclagemService {
         final Rodada ultimaRodada = this.ultimaRodada();
         int result = 0;
         switch (tipoRodada) {
-            case TIPO -> {
+            case TIPO ->
                 result = this.jogador1.getCartas().element().compareToTipo(this.jogador2.getCartas().element());
-            }
-            case DECOMPOSICAO -> {
+            case DECOMPOSICAO ->
                 result = this.jogador1.getCartas().element().compareToDecomposicao(this.jogador2.getCartas().element());
-            }
-            case RECICLAVEL -> {
+            case RECICLAVEL ->
                 result = this.jogador1.getCartas().element().compareToEhReciclavel(this.jogador2.getCartas().element());
-            }
-            case ATAQUE -> {
+            case ATAQUE ->
                 result = this.jogador1.getCartas().element().compareToAtaque(this.jogador2.getCartas().element());
-            }
         }
         ultimaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
         return result;

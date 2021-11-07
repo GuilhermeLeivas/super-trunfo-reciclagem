@@ -29,42 +29,30 @@ public class CorUtil {
     private List<Carta.Cor> findCoresMenores(Carta.Cor cor) {
         List<Carta.Cor> cores = null;
         switch (cor) {
-            case MENOR -> {
+            case MENOR ->
                 cores = new ArrayList<>();
-            }
-            case ROXO -> {
+            case ROXO ->
                 cores = List.of(Carta.Cor.AZUL, Carta.Cor.VERMELHO, Carta.Cor.AMARELO, Carta.Cor.VERDE, Carta.Cor.MARROM);
-            }
-            case BRANCO -> {
+            case BRANCO ->
                 cores = List.of(Carta.Cor.LARANJA, Carta.Cor.ROXO, Carta.Cor.AZUL, Carta.Cor.VERMELHO, Carta.Cor.AMARELO);
-            }
-            case PRETO -> {
+            case PRETO ->
                 cores = List.of(Carta.Cor.BRANCO, Carta.Cor.LARANJA, Carta.Cor.ROXO, Carta.Cor.AZUL, Carta.Cor.VERMELHO);
-            }
-            case LARANJA -> {
+            case LARANJA ->
                 cores = List.of(Carta.Cor.ROXO, Carta.Cor.AZUL, Carta.Cor.VERMELHO, Carta.Cor.AMARELO, Carta.Cor.VERDE);
-            }
-            case CINZA -> {
+            case CINZA ->
                 cores = List.of(Carta.Cor.PRETO, Carta.Cor.BRANCO, Carta.Cor.LARANJA, Carta.Cor.ROXO, Carta.Cor.AZUL);
-            }
-            case MARROM -> {
+            case MARROM ->
                 cores = List.of(Carta.Cor.CINZA, Carta.Cor.PRETO, Carta.Cor.BRANCO, Carta.Cor.LARANJA, Carta.Cor.ROXO);
-            }
-            case VERDE -> {
+            case VERDE ->
                 cores = List.of(Carta.Cor.MARROM, Carta.Cor.CINZA, Carta.Cor.PRETO, Carta.Cor.BRANCO, Carta.Cor.LARANJA);
-            }
-            case AMARELO -> {
+            case AMARELO ->
                 cores = List.of(Carta.Cor.VERDE, Carta.Cor.MARROM, Carta.Cor.CINZA, Carta.Cor.PRETO, Carta.Cor.BRANCO);
-            }
-            case VERMELHO -> {
+            case VERMELHO ->
                 cores = List.of(Carta.Cor.AMARELO, Carta.Cor.VERDE, Carta.Cor.MARROM, Carta.Cor.CINZA, Carta.Cor.PRETO);
-            }
-            case AZUL -> {
+            case AZUL ->
                 cores = List.of(Carta.Cor.VERMELHO, Carta.Cor.AMARELO, Carta.Cor.VERDE, Carta.Cor.MARROM, Carta.Cor.CINZA);
-            }
-            case MAIOR -> {
+            case MAIOR ->
                 cores = Arrays.stream(Carta.Cor.values()).toList();
-            }
             case INDEFINIDA -> {
                 return null;
             }
