@@ -31,7 +31,8 @@ public class SuperTrunfoDaReciclagemService {
 
     public void iniciaJogo(String nomeJogador1, String nomeJogador2, Rodada.TipoRodada tipoPrimeiraRodada) {
         try {
-            this.baralho = BaralhoFileReader.readBaralhoFile();
+            this.baralho = BaralhoFileReader.getInstance().readBaralhoFile();
+            assert this.baralho != null;
             int numeroDeCartas = this.baralho.getCartas().size();
             int numeroDeCartasPorJogador = numeroDeCartas / 2;
             this.jogador1 = new Jogador(nomeJogador1, this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
