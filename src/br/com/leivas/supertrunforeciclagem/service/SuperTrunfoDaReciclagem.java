@@ -59,7 +59,6 @@ public class SuperTrunfoDaReciclagem {
                     this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
             this.proximaJogada(tipoPrimeiraRodada);
             this.statusJogo = StatusJogo.EM_ANDAMENTO;
-
         } catch (Exception ex) {
             Logger.getLogger(SuperTrunfoDaReciclagemMain.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
         }
@@ -72,16 +71,22 @@ public class SuperTrunfoDaReciclagem {
      */
     public void proximaJogada(Rodada.TipoRodada tipoRodada) {
         Rodada novaRodada = new Rodada();
+        Carta cartaJogador1 = this.jogador1.getCartas().poll();
+        Carta cartaJogador2 = this.jogador2.getCartas().poll();
+        this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
         int result = 0;
-        switch (tipoRodada) {
-            case TIPO -> result = this.jogador1.getCartas().element().compareToTipo(this.jogador2.getCartas().element());
-            case DECOMPOSICAO -> result = this.jogador1.getCartas().element().compareToDecomposicao(this.jogador2.getCartas().element());
-            case RECICLAVEL -> result = this.jogador1.getCartas().element().compareToEhReciclavel(this.jogador2.getCartas().element());
-            case ATAQUE -> result = this.jogador1.getCartas().element().compareToAtaque(this.jogador2.getCartas().element());
+        if (cartaJogador1 != null && cartaJogador2 != null) {
+            switch (tipoRodada) {
+                case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
+                case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
+                case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
+                case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
+            }
         }
         novaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
         novaRodada.setTipoRodada(tipoRodada);
         this.adicionaRodada(novaRodada);
+        this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
     }
 
     /**
@@ -148,10 +153,36 @@ public class SuperTrunfoDaReciclagem {
         return this.rodadas.get(this.rodadas.size() - 1);
     }
 
+    /**
+     * Adiciona uma nova rodada ao jogo.
+     *
+     * @param rodada Nova rodada.
+     */
     private void adicionaRodada(Rodada rodada) {
         if (this.rodadas == null) {
             this.rodadas = new ArrayList<>();
         }
         this.rodadas.add(rodada);
+    }
+
+    /**
+     * Adiona as cartas de do cima do monte
+     * de cada jogador participando da rodada na mesa.
+     */
+    private void adicionaCartasNaMesa(Carta cartaJogador1, Carta cartaJogador2) {
+        if (this.cartasNaMesa == null) {
+            this.cartasNaMesa = new ArrayList<>();
+        }
+        this.cartasNaMesa.add(cartaJogador1);
+        this.cartasNaMesa.add(cartaJogador2);
+    }
+
+    /**
+     * Adiciona as cartas da mesa ao jogador vencedor da rodada.
+     *
+     * @param jogador Jogador vencedor da rodada atual.
+     */
+    private void cartasNaMesaParaVencedorRodada(Jogador jogador) {
+        this.cartasNaMesa.forEach(jogador::incluir);
     }
 }
