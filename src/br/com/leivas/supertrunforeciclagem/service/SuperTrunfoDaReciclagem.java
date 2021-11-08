@@ -183,6 +183,10 @@ public class SuperTrunfoDaReciclagem {
      * @param jogador Jogador vencedor da rodada atual.
      */
     private void cartasNaMesaParaVencedorRodada(Jogador jogador) {
-        this.cartasNaMesa.forEach(jogador::incluir);
+        Rodada ultimaRodada = this.ultimaRodada();
+        // Em caso de empate na rodada, as cartas continuam na mesa.
+        if (ultimaRodada.getVencedorRodada() != null) {
+            this.cartasNaMesa.forEach(jogador::incluir);
+        }
     }
 }
