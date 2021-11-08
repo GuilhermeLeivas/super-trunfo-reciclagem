@@ -53,14 +53,11 @@ public class SuperTrunfoDaReciclagem {
             assert this.baralho != null;
             int numeroDeCartas = this.baralho.getCartas().size();
             int numeroDeCartasPorJogador = numeroDeCartas / 2;
-            this.jogador1 = new Jogador(nomeJogador1, this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
-            this.jogador2 = new Jogador(nomeJogador2, this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
-            Rodada primeiraRodada = new Rodada();
-            primeiraRodada.setTipoRodada(tipoPrimeiraRodada);
-            if (this.rodadas == null) {
-                this.rodadas = new ArrayList<>();
-                this.rodadas.add(primeiraRodada);
-            }
+            this.jogador1 = new Jogador(1, nomeJogador1,
+                    this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
+            this.jogador2 = new Jogador(2, nomeJogador2,
+                    this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
+            this.proximaJogada(tipoPrimeiraRodada);
             this.statusJogo = StatusJogo.EM_ANDAMENTO;
 
         } catch (Exception ex) {
@@ -74,7 +71,7 @@ public class SuperTrunfoDaReciclagem {
      * @param tipoRodada Tipo de rodada escolhida pelo ganhador da rodada anterior.
      */
     public void proximaJogada(Rodada.TipoRodada tipoRodada) {
-        final Rodada ultimaRodada = this.ultimaRodada();
+        Rodada novaRodada = new Rodada();
         int result = 0;
         switch (tipoRodada) {
             case TIPO -> result = this.jogador1.getCartas().element().compareToTipo(this.jogador2.getCartas().element());
@@ -82,7 +79,9 @@ public class SuperTrunfoDaReciclagem {
             case RECICLAVEL -> result = this.jogador1.getCartas().element().compareToEhReciclavel(this.jogador2.getCartas().element());
             case ATAQUE -> result = this.jogador1.getCartas().element().compareToAtaque(this.jogador2.getCartas().element());
         }
-        ultimaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
+        novaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
+        novaRodada.setTipoRodada(tipoRodada);
+        this.adicionaRodada(novaRodada);
     }
 
     /**
@@ -96,29 +95,6 @@ public class SuperTrunfoDaReciclagem {
             this.statusJogo = StatusJogo.FINALIZADO;
             this.vencedorPartida = jogador1TemTodasCartas ? jogador1 : jogador2;
         }
-    }
-
-    /**
-     * Adiciona as cartas para um jogador.
-     *
-     * @param baralho        Baralho que possui as cartas
-     * @param startPoint     De qual carta começa
-     * @param numeroDeCartas Até qual carta
-     * @return As cartas do jogador
-     */
-    private Queue<Carta> adicionaCartasJogador(Baralho baralho, int startPoint, int numeroDeCartas) {
-        LinkedList<Carta> cartasJogador = new LinkedList<>();
-        for (int i = startPoint; i < numeroDeCartas; i++) {
-            cartasJogador.add(baralho.getCartas().get(i));
-        }
-        return cartasJogador;
-    }
-
-    /**
-     * @return Método que retorna a última jogada da partida/jogo.
-     */
-    private Rodada ultimaRodada() {
-        return this.rodadas.get(this.rodadas.size() - 1);
     }
 
     public Jogador getJogador1() {
@@ -147,5 +123,35 @@ public class SuperTrunfoDaReciclagem {
 
     public Jogador getVencedorPartida() {
         return vencedorPartida;
+    }
+
+    /**
+     * Adiciona as cartas para um jogador.
+     *
+     * @param baralho        Baralho que possui as cartas
+     * @param startPoint     De qual carta começa
+     * @param numeroDeCartas Até qual carta
+     * @return As cartas do jogador
+     */
+    private Queue<Carta> adicionaCartasJogador(Baralho baralho, int startPoint, int numeroDeCartas) {
+        LinkedList<Carta> cartasJogador = new LinkedList<>();
+        for (int i = startPoint; i < numeroDeCartas; i++) {
+            cartasJogador.add(baralho.getCartas().get(i));
+        }
+        return cartasJogador;
+    }
+
+    /**
+     * @return Método que retorna a última jogada da partida/jogo.
+     */
+    private Rodada ultimaRodada() {
+        return this.rodadas.get(this.rodadas.size() - 1);
+    }
+
+    private void adicionaRodada(Rodada rodada) {
+        if (this.rodadas == null) {
+            this.rodadas = new ArrayList<>();
+        }
+        this.rodadas.add(rodada);
     }
 }

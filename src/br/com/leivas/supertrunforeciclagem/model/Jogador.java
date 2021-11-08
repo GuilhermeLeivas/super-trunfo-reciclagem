@@ -1,5 +1,6 @@
 package br.com.leivas.supertrunforeciclagem.model;
 
+import java.util.Objects;
 import java.util.Queue;
 
 /**
@@ -7,10 +8,12 @@ import java.util.Queue;
  */
 public class Jogador {
 
+    private final Integer codigo;
     private final String nome;
     private Queue<Carta> cartas;
 
-    public Jogador(String nome, Queue<Carta> cartas) {
+    public Jogador(Integer codigo, String nome, Queue<Carta> cartas) {
+        this.codigo = codigo;
         this.nome = nome;
         this.cartas = cartas;
     }
@@ -31,6 +34,10 @@ public class Jogador {
         this.cartas.remove();
     }
 
+    public Integer getCodigo() {
+        return codigo;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -41,5 +48,18 @@ public class Jogador {
 
     public void setCartas(Queue<Carta> cartas) {
         this.cartas = cartas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Jogador jogador = (Jogador) o;
+        return codigo.equals(jogador.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
     }
 }
