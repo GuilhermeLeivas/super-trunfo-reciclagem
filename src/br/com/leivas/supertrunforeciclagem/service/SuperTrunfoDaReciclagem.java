@@ -49,16 +49,18 @@ public class SuperTrunfoDaReciclagem {
      */
     public void iniciaJogo(String nomeJogador1, String nomeJogador2, Rodada.TipoRodada tipoPrimeiraRodada) {
         try {
-            this.baralho = BaralhoFileReader.getInstance().readBaralhoFile();
-            assert this.baralho != null;
-            int numeroDeCartas = this.baralho.getCartas().size();
-            int numeroDeCartasPorJogador = numeroDeCartas / 2;
-            this.jogador1 = new Jogador(1, nomeJogador1,
-                    this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
-            this.jogador2 = new Jogador(2, nomeJogador2,
-                    this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
-            this.proximaJogada(tipoPrimeiraRodada);
-            this.statusJogo = StatusJogo.EM_ANDAMENTO;
+            if (this.statusJogo == StatusJogo.NAO_INICIADO) {
+                this.baralho = BaralhoFileReader.getInstance().readBaralhoFile();
+                assert this.baralho != null;
+                int numeroDeCartas = this.baralho.getCartas().size();
+                int numeroDeCartasPorJogador = numeroDeCartas / 2;
+                this.jogador1 = new Jogador(1, nomeJogador1,
+                        this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
+                this.jogador2 = new Jogador(2, nomeJogador2,
+                        this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
+                this.statusJogo = StatusJogo.EM_ANDAMENTO;
+                this.proximaJogada(tipoPrimeiraRodada);
+            }
         } catch (Exception ex) {
             Logger.getLogger(SuperTrunfoDaReciclagemMain.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
         }
@@ -70,23 +72,26 @@ public class SuperTrunfoDaReciclagem {
      * @param tipoRodada Tipo de rodada escolhida pelo ganhador da rodada anterior.
      */
     public void proximaJogada(Rodada.TipoRodada tipoRodada) {
-        Rodada novaRodada = new Rodada();
-        Carta cartaJogador1 = this.jogador1.getCartas().poll();
-        Carta cartaJogador2 = this.jogador2.getCartas().poll();
-        this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
-        int result = 0;
-        if (cartaJogador1 != null && cartaJogador2 != null) {
-            switch (tipoRodada) {
-                case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
-                case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
-                case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
-                case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
+        if (this.statusJogo == StatusJogo.EM_ANDAMENTO) {
+            Rodada novaRodada = new Rodada();
+            Carta cartaJogador1 = this.jogador1.getCartas().poll();
+            Carta cartaJogador2 = this.jogador2.getCartas().poll();
+            this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
+            int result = 0;
+            if (cartaJogador1 != null && cartaJogador2 != null) {
+                switch (tipoRodada) {
+                    case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
+                    case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
+                    case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
+                    case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
+                }
             }
+            novaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
+            novaRodada.setTipoRodada(tipoRodada);
+            this.adicionaRodada(novaRodada);
+            this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
+            this.verificaTerminoJogo();
         }
-        novaRodada.setVencedorRodada(result == 1 ? this.jogador1 : result == -1 ? this.jogador2 : null);
-        novaRodada.setTipoRodada(tipoRodada);
-        this.adicionaRodada(novaRodada);
-        this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
     }
 
     /**
