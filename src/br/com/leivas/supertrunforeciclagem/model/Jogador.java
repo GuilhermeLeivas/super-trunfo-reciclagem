@@ -42,8 +42,8 @@ public class Jogador {
         this.cartas.add(carta);
     }
 
-    public void excluir() {
-        this.cartas.remove();
+    public Carta proximaCarta() {
+        return this.cartas.poll();
     }
 
     public Integer getCodigo() {

@@ -75,8 +75,8 @@ public class SuperTrunfoDaReciclagem {
         if (this.statusJogo == StatusJogo.EM_ANDAMENTO) {
             Rodada novaRodada = new Rodada();
             novaRodada.setTipoRodada(tipoRodada);
-            Carta cartaJogador1 = this.jogador1.getCartas().poll();
-            Carta cartaJogador2 = this.jogador2.getCartas().poll();
+            Carta cartaJogador1 = this.jogador1.proximaCarta();
+            Carta cartaJogador2 = this.jogador2.proximaCarta();
             this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
             novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
             novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
