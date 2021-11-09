@@ -12,8 +12,25 @@ public class Rodada {
         ATAQUE
     }
 
+    public enum StatusRodada {
+        NAO_DEFINIDA,
+        VITORIA_PLAYER1,
+        VITORIA_PLAYER2,
+        EMPATE;
+
+        public static StatusRodada rodadaResultToStatus(int result) {
+            return switch (result) {
+                case 1 -> VITORIA_PLAYER1;
+                case -1 -> VITORIA_PLAYER2;
+                case 0 -> EMPATE;
+                default -> NAO_DEFINIDA;
+            };
+        }
+    }
+
     private Jogador vencedorRodada;
     private TipoRodada tipoRodada;
+    private StatusRodada statusRodada = StatusRodada.NAO_DEFINIDA;
 
     public Rodada(Jogador vencedorRodadaAnterior, Jogador vencedorRodada, TipoRodada tipoRodada) {
         this.vencedorRodada = vencedorRodada;
@@ -38,5 +55,13 @@ public class Rodada {
 
     public void setTipoRodada(TipoRodada tipoRodada) {
         this.tipoRodada = tipoRodada;
+    }
+
+    public StatusRodada getStatusRodada() {
+        return statusRodada;
+    }
+
+    public void setStatusRodada(StatusRodada statusRodada) {
+        this.statusRodada = statusRodada;
     }
 }
