@@ -18,6 +18,18 @@ public class Jogador {
         this.cartas = cartas;
     }
 
+    /**
+     * Verifica se o jogador possui todas cartas do baralho
+     * obs: O ideal seria fazer uma verificação mais aprofundada
+     * e não somente se baseando na quantidade de cartas.
+     *
+     * @param baralho Baralho usado na partida.
+     * @return True para caso tenha todas cartas, False caso não.
+     */
+    public boolean possuiTodasCartas(Baralho baralho) {
+        return this.temCartas() && this.numeroDeCartas() == baralho.tamanhoBaralho();
+    }
+
     public int numeroDeCartas() {
         return this.cartas == null ? 0 : this.cartas.size();
     }

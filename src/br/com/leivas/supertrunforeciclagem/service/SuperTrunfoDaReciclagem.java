@@ -91,8 +91,8 @@ public class SuperTrunfoDaReciclagem {
      * Isso ocorrerá quando um jogador tiver todas cartas do baralho.
      */
     public void verificaTerminoJogo() {
-        boolean jogador1TemTodasCartas = this.jogador1.numeroDeCartas() == this.baralho.tamanhoBaralho();
-        boolean jogador2TemTodasCartas = this.jogador2.numeroDeCartas() == this.baralho.tamanhoBaralho();
+        boolean jogador1TemTodasCartas = this.jogador1.possuiTodasCartas(this.baralho);
+        boolean jogador2TemTodasCartas = this.jogador2.possuiTodasCartas(this.baralho);
         if (jogador1TemTodasCartas || jogador2TemTodasCartas) {
             this.statusJogo = StatusJogo.FINALIZADO;
             this.vencedorPartida = jogador1TemTodasCartas ? jogador1 : jogador2;
