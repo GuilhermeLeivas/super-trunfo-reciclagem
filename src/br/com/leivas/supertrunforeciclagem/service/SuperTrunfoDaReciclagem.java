@@ -78,18 +78,8 @@ public class SuperTrunfoDaReciclagem {
             Carta cartaJogador1 = this.jogador1.getCartas().poll();
             Carta cartaJogador2 = this.jogador2.getCartas().poll();
             this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
-            int result = 0;
-            if (cartaJogador1 != null && cartaJogador2 != null) {
-                switch (novaRodada.getTipoRodada()) {
-                    case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
-                    case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
-                    case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
-                    case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
-                }
-            }
-            novaRodada.setStatusRodada(Rodada.StatusRodada.rodadaResultToStatus(result));
-            novaRodada.setVencedorRodada(novaRodada.getStatusRodada() == Rodada.StatusRodada.VITORIA_PLAYER1 ? this.jogador1
-                    : novaRodada.getStatusRodada() == Rodada.StatusRodada.VITORIA_PLAYER2 ? this.jogador2 : null);
+            novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
+            novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
             this.adicionaRodadaNaPartida(novaRodada);
             this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
             this.verificaTerminoJogo();
