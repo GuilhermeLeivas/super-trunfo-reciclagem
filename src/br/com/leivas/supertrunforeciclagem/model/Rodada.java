@@ -49,6 +49,7 @@ public class Rodada {
      * @param cartaJogador2 Carta da vez do jogador2
      */
     public void defineResultadoRodada(Carta cartaJogador1, Carta cartaJogador2) {
+        System.out.println("Comparando " + this.tipoRodada);
         int result = 0;
         if (cartaJogador1 != null && cartaJogador2 != null) {
             switch (this.tipoRodada) {

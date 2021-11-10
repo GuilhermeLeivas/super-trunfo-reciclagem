@@ -4,6 +4,7 @@ import br.com.leivas.supertrunforeciclagem.model.Baralho;
 import br.com.leivas.supertrunforeciclagem.model.Carta;
 import br.com.leivas.supertrunforeciclagem.model.Jogador;
 import br.com.leivas.supertrunforeciclagem.model.Rodada;
+import br.com.leivas.supertrunforeciclagem.util.RodadaUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,14 @@ public abstract class ISuperTrunfo {
     public Optional<Jogador> vencedorUltimaRodada() {
         Rodada rodada = this.ultimaRodada();
         return Optional.ofNullable(rodada.getVencedorRodada());
+    }
+
+    public Jogador ultimoVencedorPartida() {
+        Rodada.TipoRodada proximaRodada;
+        Optional<Rodada> ultiRodadaGanha = this.rodadas.stream()
+                .filter(rodada -> rodada.getVencedorRodada() != null)
+                .reduce((first, second) -> second);
+        return ultiRodadaGanha.map(Rodada::getVencedorRodada).orElse(null);
     }
 
     public Jogador getVencedorPartida() {

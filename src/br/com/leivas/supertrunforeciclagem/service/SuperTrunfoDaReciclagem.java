@@ -84,6 +84,7 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
         if (jogador1TemTodasCartas || jogador2TemTodasCartas) {
             this.setStatusJogo(StatusJogo.FINALIZADO);
             this.setVencedorPartida(jogador1TemTodasCartas ? this.jogador1 : this.jogador2);
+            this.geraLogFimPartida();
         }
     }
 
@@ -111,7 +112,6 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
         }
         return cartasJogador;
     }
-
 
 
     /**
@@ -150,5 +150,10 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
             this.getCartasNaMesa().forEach(jogador::incluir);
             this.setCartasNaMesa(new ArrayList<>());
         }
+    }
+
+    private void geraLogFimPartida() {
+        System.out.println("\n");
+        System.out.println("Vencedor da partida:\n" + this.getVencedorPartida());
     }
 }
