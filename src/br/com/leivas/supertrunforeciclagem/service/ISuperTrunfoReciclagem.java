@@ -39,7 +39,6 @@ public abstract class ISuperTrunfoReciclagem {
         return Optional.ofNullable(rodada.getVencedorRodada());
     }
 
-
     public Jogador getVencedorPartida() {
         return vencedorPartida;
     }

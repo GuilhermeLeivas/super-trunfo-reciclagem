@@ -86,4 +86,12 @@ public class Jogador {
     public int hashCode() {
         return Objects.hash(codigo);
     }
+
+    @Override
+    public String toString() {
+        return "Jogador{" +
+                "codigo=" + codigo +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 }
