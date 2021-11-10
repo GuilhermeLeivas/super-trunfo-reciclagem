@@ -21,8 +21,7 @@ public class RodadaUtil {
      * @return TipoRodada da próxima rodada.
      */
     public Rodada.TipoRodada randomTipoRodada() {
-        this.verificaStreakJogadasRepetidas(ThreadLocalRandom.current().nextInt(0, 4));
-        return Rodada.TipoRodada.values()[this.ultimoTipoRodada];
+        return this.verificaStreakJogadasRepetidas(ThreadLocalRandom.current().nextInt(0, 4));
     }
 
     /**
@@ -31,13 +30,18 @@ public class RodadaUtil {
      *
      * @param tipoRodadaIndex tipoRodadaIndex não repetida mais que 3 vezes.
      */
-    private void verificaStreakJogadasRepetidas(int tipoRodadaIndex) {
-        if (this.ultimoTipoRodada == tipoRodadaIndex && this.ultimoTipoRodadaStreak < 3) {
-            this.aumentaStreakDeRepeticao();
+    private Rodada.TipoRodada verificaStreakJogadasRepetidas(int tipoRodadaIndex) {
+        if (this.ultimoTipoRodada == tipoRodadaIndex) {
+            if (this.ultimoTipoRodadaStreak < 3) {
+                this.aumentaStreakDeRepeticao();
+            } else {
+                return this.randomTipoRodada();
+            }
         } else {
             this.ultimoTipoRodada = tipoRodadaIndex;
-            this.ultimoTipoRodadaStreak = 0;
+            this.ultimoTipoRodadaStreak = 1;
         }
+        return Rodada.TipoRodada.values()[this.ultimoTipoRodada];
     }
 
     private void aumentaStreakDeRepeticao() {
