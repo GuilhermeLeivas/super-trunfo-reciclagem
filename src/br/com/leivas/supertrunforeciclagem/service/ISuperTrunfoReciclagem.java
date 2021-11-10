@@ -36,7 +36,7 @@ public abstract class ISuperTrunfoReciclagem {
 
     public Optional<Jogador> vencedorUltimaRodada() {
         Rodada rodada = this.ultimaRodada();
-        return Optional.of(rodada.getVencedorRodada());
+        return Optional.ofNullable(rodada.getVencedorRodada());
     }
 
 
