@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * CLasse que representa Abstrata do jogo SuperTrunfo.
  */
-public abstract class ISuperTrunfoReciclagem {
+public abstract class ISuperTrunfo {
 
     /**
      * Enum que representa o status atual do jogo.

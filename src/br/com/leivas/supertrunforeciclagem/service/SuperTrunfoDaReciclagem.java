@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * CLasse que representa o funcionamento do jogo, suas regras e suas etapas.
  */
-public class SuperTrunfoDaReciclagem extends ISuperTrunfoReciclagem {
+public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
 
     private Jogador jogador1;
     private Jogador jogador2;
