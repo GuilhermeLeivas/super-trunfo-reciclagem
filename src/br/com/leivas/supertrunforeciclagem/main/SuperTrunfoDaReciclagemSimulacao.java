@@ -1,10 +1,11 @@
 package br.com.leivas.supertrunforeciclagem.main;
 
+import br.com.leivas.supertrunforeciclagem.model.Jogador;
 import br.com.leivas.supertrunforeciclagem.model.Rodada;
 import br.com.leivas.supertrunforeciclagem.service.ISuperTrunfoReciclagem;
 import br.com.leivas.supertrunforeciclagem.service.SuperTrunfoDaReciclagem;
-import br.com.leivas.supertrunforeciclagem.util.RodadaUtil;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -23,6 +24,12 @@ public class SuperTrunfoDaReciclagemSimulacao {
         String nomeJogador2 = scanner.nextLine();
         facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2, Rodada.TipoRodada.TIPO);
         while (facadeSuperTrunfo.getStatusJogo() != ISuperTrunfoReciclagem.StatusJogo.FINALIZADO) {
+            Optional<Jogador> jogador = facadeSuperTrunfo.vencedorUltimaRodada();
+            System.out.println(jogador.isPresent() ? String.format("Vencedor da rodada %s\n", jogador.get()) : "Empate na rodada\n");
+            jogador.ifPresentOrElse(jogadorVencedor -> {
+                System.out.println("Vencedor da rodada " + jogadorVencedor);
+                facadeSuperTrunfo.proximaJogada(jogadorVencedor.escolherTipoRodada());
+            }, () -> System.out.println(""));
 
         }
 

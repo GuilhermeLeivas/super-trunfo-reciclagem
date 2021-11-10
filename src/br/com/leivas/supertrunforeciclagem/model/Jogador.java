@@ -1,5 +1,7 @@
 package br.com.leivas.supertrunforeciclagem.model;
 
+import br.com.leivas.supertrunforeciclagem.util.RodadaUtil;
+
 import java.util.Objects;
 import java.util.Queue;
 
@@ -11,6 +13,9 @@ public class Jogador {
     private final Integer codigo;
     private final String nome;
     private Queue<Carta> cartas;
+
+
+    private RodadaUtil rodadaUtil;
 
     public Jogador(Integer codigo, String nome, Queue<Carta> cartas) {
         this.codigo = codigo;
@@ -44,6 +49,13 @@ public class Jogador {
 
     public Carta proximaCarta() {
         return this.cartas.poll();
+    }
+
+    public Rodada.TipoRodada escolherTipoRodada() {
+        if (this.rodadaUtil == null) {
+            this.rodadaUtil = new RodadaUtil();
+        }
+        return this.rodadaUtil.randomTipoRodada();
     }
 
     public Integer getCodigo() {

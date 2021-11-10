@@ -112,12 +112,7 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfoReciclagem {
         return cartasJogador;
     }
 
-    /**
-     * @return Método que retorna a última jogada da partida/jogo.
-     */
-    private Rodada ultimaRodada() {
-        return this.getRodadas().get(this.getRodadas().size() - 1);
-    }
+
 
     /**
      * Adiciona uma nova rodada ao jogo.

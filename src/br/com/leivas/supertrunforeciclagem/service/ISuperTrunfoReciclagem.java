@@ -6,6 +6,7 @@ import br.com.leivas.supertrunforeciclagem.model.Jogador;
 import br.com.leivas.supertrunforeciclagem.model.Rodada;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * CLasse que representa Abstrata do jogo SuperTrunfo.
@@ -32,6 +33,12 @@ public abstract class ISuperTrunfoReciclagem {
     abstract public void proximaJogada(Rodada.TipoRodada tipoRodada);
 
     abstract public void verificaTerminoJogo();
+
+    public Optional<Jogador> vencedorUltimaRodada() {
+        Rodada rodada = this.ultimaRodada();
+        return Optional.of(rodada.getVencedorRodada());
+    }
+
 
     public Jogador getVencedorPartida() {
         return vencedorPartida;
@@ -71,5 +78,12 @@ public abstract class ISuperTrunfoReciclagem {
 
     protected void setStatusJogo(StatusJogo statusJogo) {
         this.statusJogo = statusJogo;
+    }
+
+    /**
+     * @return Método que retorna a última jogada da partida/jogo.
+     */
+    protected Rodada ultimaRodada() {
+        return this.rodadas.get(this.rodadas.size() - 1);
     }
 }
