@@ -37,7 +37,7 @@ public abstract class ISuperTrunfoReciclagem {
         return vencedorPartida;
     }
 
-    public void setVencedorPartida(Jogador vencedorPartida) {
+    protected void setVencedorPartida(Jogador vencedorPartida) {
         this.vencedorPartida = vencedorPartida;
     }
 
@@ -45,7 +45,7 @@ public abstract class ISuperTrunfoReciclagem {
         return baralho;
     }
 
-    public void setBaralho(Baralho baralho) {
+    protected void setBaralho(Baralho baralho) {
         this.baralho = baralho;
     }
 
@@ -53,7 +53,7 @@ public abstract class ISuperTrunfoReciclagem {
         return rodadas;
     }
 
-    public void setRodadas(List<Rodada> rodadas) {
+    protected void setRodadas(List<Rodada> rodadas) {
         this.rodadas = rodadas;
     }
 
@@ -61,7 +61,7 @@ public abstract class ISuperTrunfoReciclagem {
         return cartasNaMesa;
     }
 
-    public void setCartasNaMesa(List<Carta> cartasNaMesa) {
+    protected void setCartasNaMesa(List<Carta> cartasNaMesa) {
         this.cartasNaMesa = cartasNaMesa;
     }
 
@@ -69,7 +69,7 @@ public abstract class ISuperTrunfoReciclagem {
         return statusJogo;
     }
 
-    public void setStatusJogo(StatusJogo statusJogo) {
+    protected void setStatusJogo(StatusJogo statusJogo) {
         this.statusJogo = statusJogo;
     }
 }
