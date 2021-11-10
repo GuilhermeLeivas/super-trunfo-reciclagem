@@ -148,6 +148,7 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfoReciclagem {
         // Em caso de empate na rodada, as cartas continuam na mesa.
         if (ultimaRodada.getVencedorRodada() != null) {
             this.getCartasNaMesa().forEach(jogador::incluir);
+            this.setCartasNaMesa(new ArrayList<>());
         }
     }
 }

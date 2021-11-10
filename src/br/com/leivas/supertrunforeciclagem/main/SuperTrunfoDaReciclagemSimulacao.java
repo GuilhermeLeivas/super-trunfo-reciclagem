@@ -25,11 +25,10 @@ public class SuperTrunfoDaReciclagemSimulacao {
         facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2, Rodada.TipoRodada.TIPO);
         while (facadeSuperTrunfo.getStatusJogo() != ISuperTrunfoReciclagem.StatusJogo.FINALIZADO) {
             Optional<Jogador> jogador = facadeSuperTrunfo.vencedorUltimaRodada();
-            System.out.println(jogador.isPresent() ? String.format("Vencedor da rodada %s\n", jogador.get()) : "Empate na rodada\n");
             jogador.ifPresentOrElse(jogadorVencedor -> {
                 System.out.println("Vencedor da rodada " + jogadorVencedor);
                 facadeSuperTrunfo.proximaJogada(jogadorVencedor.escolherTipoRodada());
-            }, () -> System.out.println(""));
+            }, () -> System.out.println("Empate na rodada"));
 
         }
 
