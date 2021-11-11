@@ -2,6 +2,7 @@ package br.com.leivas.supertrunforeciclagem.model;
 
 import br.com.leivas.supertrunforeciclagem.service.SuperTrunfoDaReciclagem;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,15 +46,35 @@ public class Rodada {
      * @param cartaJogador2 Carta da vez do jogador2
      */
     public void defineResultadoRodada(Carta cartaJogador1, Carta cartaJogador2) {
-        System.out.println("Comparando " + this.tipoRodada);
         Logger.getLogger(Rodada.class.getName())
-                .log(Level.INFO, String.format("Carta %s contra carta %s", cartaJogador1.getNome(), cartaJogador2.getNome()));
+                .log(Level.INFO, String.format("Carta %s contra carta %s comparando %s",
+                        cartaJogador1,
+                        cartaJogador2,
+                        this.tipoRodada));
         int result = 0;
         switch (this.tipoRodada) {
-            case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
-            case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
-            case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
-            case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
+            case TIPO -> {
+                Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                        .log(Level.INFO, String.format("Cor %s contra Cor %s", cartaJogador1.getCor(), cartaJogador2.getCor()));
+                result = cartaJogador1.compareToTipo(cartaJogador2);
+            }
+            case DECOMPOSICAO -> {
+                Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                        .log(Level.INFO, String.format("Decomposição %s contra Decomposição %s",
+                                cartaJogador1.getDecomposicao(), cartaJogador2.getDecomposicao()));
+                result = cartaJogador1.compareToDecomposicao(cartaJogador2);
+            }
+            case RECICLAVEL -> {
+                Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                        .log(Level.INFO, String.format("Eh reciclavel %s contra Eh reciclavel %s",
+                                cartaJogador1.ehReciclavel(), cartaJogador2.ehReciclavel()));
+                result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
+            }
+            case ATAQUE -> {
+                Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                        .log(Level.INFO, String.format("Ataque %s contra Ataque %s", cartaJogador1.getAtaque(), cartaJogador2.getAtaque()));
+                result = cartaJogador1.compareToAtaque(cartaJogador2);
+            }
         }
         this.statusRodada = StatusRodada.rodadaResultToStatus(result);
     }

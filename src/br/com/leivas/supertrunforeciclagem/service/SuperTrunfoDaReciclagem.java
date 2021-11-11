@@ -135,7 +135,7 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
      * de cada jogador participando da rodada na mesa.
      */
     private void adicionaCartasNaMesa(Carta cartaJogador1, Carta cartaJogador2) {
-        System.out.println("Cartas colocadas na mesa");
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.INFO, "Cartas colocadas na mesa\n");
         if (this.getCartasNaMesa() == null) {
             this.setCartasNaMesa(new ArrayList<>());
         }

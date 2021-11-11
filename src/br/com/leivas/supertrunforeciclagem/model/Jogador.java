@@ -2,6 +2,7 @@ package br.com.leivas.supertrunforeciclagem.model;
 
 import br.com.leivas.supertrunforeciclagem.util.RodadaUtil;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -89,8 +90,6 @@ public class Jogador {
 
     @Override
     public String toString() {
-        return "Jogador:" +
-                "codigo=" + codigo +
-                ", nome='" + nome + '\'';
+        return String.format("--- Jogador #%d %s ---", this.codigo, this.nome.toUpperCase(Locale.ROOT));
     }
 }

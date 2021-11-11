@@ -3,6 +3,7 @@ package br.com.leivas.supertrunforeciclagem.model;
 import br.com.leivas.supertrunforeciclagem.util.CorUtil;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Classe que representa uma carta abstrata no sistema
@@ -169,12 +170,6 @@ public abstract class Carta implements Serializable {
 
     @Override
     public String toString() {
-        return "Carta{" +
-                "nome='" + nome + '\'' +
-                ", tipo='" + tipo + '\'' +
-                ", cor=" + cor +
-                ", decomposicao=" + decomposicao +
-                ", ataque=" + ataque +
-                '}';
+        return String.format("--- #%s %s ---", this.codigo, this.nome.toUpperCase(Locale.ROOT));
     }
 }
