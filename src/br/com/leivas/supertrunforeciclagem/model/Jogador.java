@@ -51,7 +51,7 @@ public class Jogador {
         return this.cartas.poll();
     }
 
-    public Rodada.TipoRodada escolherTipoRodada() {
+    public Rodada.TipoRodada escolherRodadaRandomicamente() {
         if (this.rodadaUtil == null) {
             this.rodadaUtil = new RodadaUtil();
         }
@@ -89,9 +89,8 @@ public class Jogador {
 
     @Override
     public String toString() {
-        return "Jogador{" +
+        return "Jogador:" +
                 "codigo=" + codigo +
-                ", nome='" + nome + '\'' +
-                '}';
+                ", nome='" + nome + '\'';
     }
 }

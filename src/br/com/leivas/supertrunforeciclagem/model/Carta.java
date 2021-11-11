@@ -171,7 +171,6 @@ public abstract class Carta implements Serializable {
     public String toString() {
         return "Carta{" +
                 "nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
                 ", tipo='" + tipo + '\'' +
                 ", cor=" + cor +
                 ", decomposicao=" + decomposicao +

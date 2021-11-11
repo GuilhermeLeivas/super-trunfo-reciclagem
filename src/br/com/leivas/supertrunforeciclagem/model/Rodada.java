@@ -1,5 +1,10 @@
 package br.com.leivas.supertrunforeciclagem.model;
 
+import br.com.leivas.supertrunforeciclagem.service.SuperTrunfoDaReciclagem;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Classe que representa cada rodada do jogo no sistema.
  */
@@ -32,15 +37,6 @@ public class Rodada {
     private TipoRodada tipoRodada;
     private StatusRodada statusRodada = StatusRodada.NAO_DEFINIDA;
 
-    public Rodada(Jogador vencedorRodadaAnterior, Jogador vencedorRodada, TipoRodada tipoRodada) {
-        this.vencedorRodada = vencedorRodada;
-        this.tipoRodada = tipoRodada;
-    }
-
-    public Rodada() {
-
-    }
-
     /**
      * Método responsável por alterar o status da rodada dependendo do resultado no combate
      * das duas cartas usadas na rodada atual.
@@ -50,14 +46,14 @@ public class Rodada {
      */
     public void defineResultadoRodada(Carta cartaJogador1, Carta cartaJogador2) {
         System.out.println("Comparando " + this.tipoRodada);
+        Logger.getLogger(Rodada.class.getName())
+                .log(Level.INFO, String.format("Carta %s contra carta %s", cartaJogador1.getNome(), cartaJogador2.getNome()));
         int result = 0;
-        if (cartaJogador1 != null && cartaJogador2 != null) {
-            switch (this.tipoRodada) {
-                case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
-                case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
-                case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
-                case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
-            }
+        switch (this.tipoRodada) {
+            case TIPO -> result = cartaJogador1.compareToTipo(cartaJogador2);
+            case DECOMPOSICAO -> result = cartaJogador1.compareToDecomposicao(cartaJogador2);
+            case RECICLAVEL -> result = cartaJogador1.compareToEhReciclavel(cartaJogador2);
+            case ATAQUE -> result = cartaJogador1.compareToAtaque(cartaJogador2);
         }
         this.statusRodada = StatusRodada.rodadaResultToStatus(result);
     }
@@ -75,6 +71,10 @@ public class Rodada {
             case VITORIA_PLAYER2 -> this.vencedorRodada = jogador2;
             case EMPATE -> this.vencedorRodada = null;
         }
+        String logRodada = this.vencedorRodada == null ? "Empate na rodada" :
+                String.format("Vencedor da rodada %s", this.vencedorRodada.getNome());
+        Logger.getLogger(Rodada.class.getName())
+                .log(Level.INFO, logRodada);
     }
 
     public Jogador getVencedorRodada() {

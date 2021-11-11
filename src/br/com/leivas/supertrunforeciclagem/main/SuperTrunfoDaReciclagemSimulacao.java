@@ -28,13 +28,11 @@ public class SuperTrunfoDaReciclagemSimulacao {
             Optional<Jogador> jogadorVencedor = facadeSuperTrunfo.vencedorUltimaRodada();
             Rodada.TipoRodada tipoProximaRodada;
             if (jogadorVencedor.isPresent()) {
-                System.out.println("Vencedor da rodada " + jogadorVencedor);
-                tipoProximaRodada = jogadorVencedor.get().escolherTipoRodada();
+                tipoProximaRodada = jogadorVencedor.get().escolherRodadaRandomicamente();
             } else {
-                System.out.println("Empate na rodada Ultimo vencedor deve escolher nova rodada\n");
                 Jogador ultimoVencedor = facadeSuperTrunfo.ultimoVencedorPartida();
                 tipoProximaRodada = ultimoVencedor != null ?
-                        ultimoVencedor.escolherTipoRodada()
+                        ultimoVencedor.escolherRodadaRandomicamente()
                         : new RodadaUtil().randomTipoRodada();
             }
             facadeSuperTrunfo.proximaJogada(tipoProximaRodada);
