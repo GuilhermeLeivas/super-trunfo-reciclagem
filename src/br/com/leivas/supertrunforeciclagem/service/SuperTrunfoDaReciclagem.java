@@ -1,7 +1,7 @@
 package br.com.leivas.supertrunforeciclagem.service;
 
-import br.com.leivas.supertrunforeciclagem.main.SuperTrunfoDaReciclagemMain;
 import br.com.leivas.supertrunforeciclagem.io.BaralhoFileReader;
+import br.com.leivas.supertrunforeciclagem.main.SuperTrunfoDaReciclagemSimulacao;
 import br.com.leivas.supertrunforeciclagem.model.Baralho;
 import br.com.leivas.supertrunforeciclagem.model.Carta;
 import br.com.leivas.supertrunforeciclagem.model.Jogador;
@@ -9,7 +9,6 @@ import br.com.leivas.supertrunforeciclagem.model.Rodada;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,24 +16,10 @@ import java.util.logging.Logger;
 /**
  * CLasse que representa o funcionamento do jogo, suas regras e suas etapas.
  */
-public class SuperTrunfoDaReciclagem {
-
-    /**
-     * Enum que representa o status atual do jogo.
-     */
-    public enum StatusJogo {
-        NAO_INICIADO,
-        EM_ANDAMENTO,
-        FINALIZADO
-    }
+public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
 
     private Jogador jogador1;
     private Jogador jogador2;
-    private Jogador vencedorPartida;
-    private Baralho baralho;
-    private List<Rodada> rodadas;
-    private List<Carta> cartasNaMesa;
-    private StatusJogo statusJogo = StatusJogo.NAO_INICIADO;
 
     /**
      * Método responsável por:
@@ -47,22 +32,23 @@ public class SuperTrunfoDaReciclagem {
      * @param nomeJogador2       Nome do jogador2
      * @param tipoPrimeiraRodada Escolha do primeiro tipo de rodada
      */
+    @Override
     public void iniciaJogo(String nomeJogador1, String nomeJogador2, Rodada.TipoRodada tipoPrimeiraRodada) {
         try {
-            if (this.statusJogo == StatusJogo.NAO_INICIADO) {
-                this.baralho = BaralhoFileReader.getInstance().readBaralhoFile();
-                assert this.baralho != null;
-                int numeroDeCartas = this.baralho.getCartas().size();
+            if (this.getStatusJogo() == StatusJogo.NAO_INICIADO) {
+                this.setBaralho(BaralhoFileReader.getInstance().readBaralhoFile());
+                assert this.getBaralho() != null;
+                int numeroDeCartas = this.getBaralho().getCartas().size();
                 int numeroDeCartasPorJogador = numeroDeCartas / 2;
                 this.jogador1 = new Jogador(1, nomeJogador1,
-                        this.adicionaCartasJogador(this.baralho, 0, numeroDeCartasPorJogador));
+                        this.adicionaCartasJogador(this.getBaralho(), 0, numeroDeCartasPorJogador));
                 this.jogador2 = new Jogador(2, nomeJogador2,
-                        this.adicionaCartasJogador(this.baralho, numeroDeCartasPorJogador, numeroDeCartas));
-                this.statusJogo = StatusJogo.EM_ANDAMENTO;
+                        this.adicionaCartasJogador(this.getBaralho(), numeroDeCartasPorJogador, numeroDeCartas));
+                this.setStatusJogo(StatusJogo.EM_ANDAMENTO);
                 this.proximaJogada(tipoPrimeiraRodada);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SuperTrunfoDaReciclagemMain.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
+            Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
         }
     }
 
@@ -71,12 +57,17 @@ public class SuperTrunfoDaReciclagem {
      *
      * @param tipoRodada Tipo de rodada escolhida pelo ganhador da rodada anterior.
      */
+    @Override
     public void proximaJogada(Rodada.TipoRodada tipoRodada) {
-        if (this.statusJogo == StatusJogo.EM_ANDAMENTO) {
+        if (this.getStatusJogo() == StatusJogo.EM_ANDAMENTO) {
             Rodada novaRodada = new Rodada();
             novaRodada.setTipoRodada(tipoRodada);
             Carta cartaJogador1 = this.jogador1.proximaCarta();
             Carta cartaJogador2 = this.jogador2.proximaCarta();
+            Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
+                    .log(Level.INFO, String.format("Nova rodada | Rodada número %d\n", this.getRodadas() == null ? 1 : this.getRodadas().size() + 1));
+            Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
+                    .log(Level.INFO, String.format("%s contra %s\n", this.jogador1, this.jogador2));
             this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
             novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
             novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
@@ -90,12 +81,14 @@ public class SuperTrunfoDaReciclagem {
      * A cada rodada é verificado se o jogo tem um ganhador.
      * Isso ocorrerá quando um jogador tiver todas cartas do baralho.
      */
+    @Override
     public void verificaTerminoJogo() {
-        boolean jogador1TemTodasCartas = this.jogador1.possuiTodasCartas(this.baralho);
-        boolean jogador2TemTodasCartas = this.jogador2.possuiTodasCartas(this.baralho);
+        boolean jogador1TemTodasCartas = this.jogador1.possuiTodasCartas(this.getBaralho());
+        boolean jogador2TemTodasCartas = this.jogador2.possuiTodasCartas(this.getBaralho());
         if (jogador1TemTodasCartas || jogador2TemTodasCartas) {
-            this.statusJogo = StatusJogo.FINALIZADO;
-            this.vencedorPartida = jogador1TemTodasCartas ? jogador1 : jogador2;
+            this.setStatusJogo(StatusJogo.FINALIZADO);
+            this.setVencedorPartida(jogador1TemTodasCartas ? this.jogador1 : this.jogador2);
+            this.geraLogFimPartida();
         }
     }
 
@@ -107,25 +100,6 @@ public class SuperTrunfoDaReciclagem {
         return jogador2;
     }
 
-    public Baralho getBaralho() {
-        return baralho;
-    }
-
-    public List<Rodada> getRodadas() {
-        return rodadas;
-    }
-
-    public List<Carta> getCartasNaMesa() {
-        return cartasNaMesa;
-    }
-
-    public StatusJogo getStatusJogo() {
-        return statusJogo;
-    }
-
-    public Jogador getVencedorPartida() {
-        return vencedorPartida;
-    }
 
     /**
      * Adiciona as cartas para um jogador.
@@ -143,12 +117,6 @@ public class SuperTrunfoDaReciclagem {
         return cartasJogador;
     }
 
-    /**
-     * @return Método que retorna a última jogada da partida/jogo.
-     */
-    private Rodada ultimaRodada() {
-        return this.rodadas.get(this.rodadas.size() - 1);
-    }
 
     /**
      * Adiciona uma nova rodada ao jogo.
@@ -156,10 +124,10 @@ public class SuperTrunfoDaReciclagem {
      * @param rodada Nova rodada.
      */
     private void adicionaRodadaNaPartida(Rodada rodada) {
-        if (this.rodadas == null) {
-            this.rodadas = new ArrayList<>();
+        if (this.getRodadas() == null) {
+            this.setRodadas(new ArrayList<>());
         }
-        this.rodadas.add(rodada);
+        this.getRodadas().add(rodada);
     }
 
     /**
@@ -167,11 +135,12 @@ public class SuperTrunfoDaReciclagem {
      * de cada jogador participando da rodada na mesa.
      */
     private void adicionaCartasNaMesa(Carta cartaJogador1, Carta cartaJogador2) {
-        if (this.cartasNaMesa == null) {
-            this.cartasNaMesa = new ArrayList<>();
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.INFO, "Cartas colocadas na mesa\n");
+        if (this.getCartasNaMesa() == null) {
+            this.setCartasNaMesa(new ArrayList<>());
         }
-        this.cartasNaMesa.add(cartaJogador1);
-        this.cartasNaMesa.add(cartaJogador2);
+        this.getCartasNaMesa().add(cartaJogador1);
+        this.getCartasNaMesa().add(cartaJogador2);
     }
 
     /**
@@ -181,9 +150,19 @@ public class SuperTrunfoDaReciclagem {
      */
     private void cartasNaMesaParaVencedorRodada(Jogador jogador) {
         Rodada ultimaRodada = this.ultimaRodada();
+        boolean ehEmpate = ultimaRodada.getVencedorRodada() == null;
+        String log = ehEmpate ? "Cartas continuam na mesa para próxima rodada"
+                : String.format("Jogador %s leva as cartas da mesa", ultimaRodada.getVencedorRodada().getNome());
         // Em caso de empate na rodada, as cartas continuam na mesa.
-        if (ultimaRodada.getVencedorRodada() != null) {
-            this.cartasNaMesa.forEach(jogador::incluir);
+        if (!ehEmpate) {
+            this.getCartasNaMesa().forEach(jogador::incluir);
+            this.setCartasNaMesa(new ArrayList<>());
         }
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.INFO, log);
+    }
+
+    private void geraLogFimPartida() {
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                .log(Level.INFO, "Vencedor da partida:" + this.getVencedorPartida());
     }
 }
