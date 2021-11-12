@@ -19,9 +19,9 @@ public class SuperTrunfoDaReciclagemSimulacao {
 
         final ISuperTrunfo facadeSuperTrunfo = new SuperTrunfoDaReciclagem();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite o nome do jogador 1\n");
+        System.out.println("Digite o nome do player 1\n");
         String nomeJogador1 = scanner.nextLine();
-        System.out.println("Digite o nome do jogador 2\n");
+        System.out.println("Digite o nome do player 2\n");
         String nomeJogador2 = scanner.nextLine();
         facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2, Rodada.TipoRodada.DECOMPOSICAO);
         while (facadeSuperTrunfo.getStatusJogo() != ISuperTrunfo.StatusJogo.FINALIZADO) {
