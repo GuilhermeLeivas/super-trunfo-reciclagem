@@ -25,8 +25,6 @@ public class APP extends JFrame implements WindowListener,ActionListener {
         setLayout(new FlowLayout());
         addWindowListener(this);
         b = new Button("PLAY ME");
-        b.setBounds(10,10,60,60);
-        ImageIcon button = new ImageIcon (getClass().getClassLoader().getResource ("res/start-button .png"));
         setLayout(null);
 
 
