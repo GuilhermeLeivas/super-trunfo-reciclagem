@@ -64,15 +64,17 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
             novaRodada.setTipoRodada(tipoRodada);
             Carta cartaJogador1 = this.jogador1.proximaCarta();
             Carta cartaJogador2 = this.jogador2.proximaCarta();
-            Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
-                    .log(Level.INFO, String.format("Nova rodada | Rodada número %d\n", this.getRodadas() == null ? 1 : this.getRodadas().size() + 1));
-            Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
-                    .log(Level.INFO, String.format("%s contra %s\n", this.jogador1, this.jogador2));
-            this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
-            novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
-            novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
-            this.adicionaRodadaNaPartida(novaRodada);
-            this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
+            if (cartaJogador1 != null && cartaJogador2 != null) {
+                Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
+                        .log(Level.INFO, String.format("Nova rodada | Rodada número %d\n", this.getRodadas() == null ? 1 : this.getRodadas().size() + 1));
+                Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
+                        .log(Level.INFO, String.format("%s contra %s\n", this.jogador1, this.jogador2));
+                this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
+                novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
+                novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
+                this.adicionaRodadaNaPartida(novaRodada);
+                this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
+            }
             this.verificaTerminoJogo();
         }
     }
@@ -91,15 +93,6 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
             this.geraLogFimPartida();
         }
     }
-
-    public Jogador getJogador1() {
-        return jogador1;
-    }
-
-    public Jogador getJogador2() {
-        return jogador2;
-    }
-
 
     /**
      * Adiciona as cartas para um jogador.
@@ -164,5 +157,17 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
     private void geraLogFimPartida() {
         Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
                 .log(Level.INFO, "Vencedor da partida:" + this.getVencedorPartida());
+        this.logRodadasGanhas();
+    }
+
+    private void logRodadasGanhas() {
+        final long rodadasGanhasJogador1 = this.getRodadas().stream().filter(r -> r.getVencedorRodada() != null
+                && r.getVencedorRodada().equals(this.jogador1)).count();
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                .log(Level.INFO, String.format("%s rodadas ganhas pelo %s", rodadasGanhasJogador1, this.jogador1));
+        final long rodadasGanhasJogador2 = this.getRodadas().stream().filter(r -> r.getVencedorRodada() != null
+                && r.getVencedorRodada().equals(this.jogador2)).count();
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                .log(Level.INFO, String.format("%s rodadas ganhas pelo %s", rodadasGanhasJogador2, this.jogador2));
     }
 }
