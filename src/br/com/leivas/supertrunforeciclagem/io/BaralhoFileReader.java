@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -84,6 +85,7 @@ public class BaralhoFileReader {
                     new CartaNaoReciclavel(codigo, nome, descricao, tipo, cor, decomposicao, ataque);
             cartasBaralho.add(carta);
         });
+        Collections.shuffle(cartasBaralho);
         baralho = new Baralho(cartasBaralho);
         return baralho;
     }

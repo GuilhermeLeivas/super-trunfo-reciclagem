@@ -8,6 +8,7 @@ import br.com.leivas.supertrunforeciclagem.model.Jogador;
 import br.com.leivas.supertrunforeciclagem.model.Rodada;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -64,15 +65,17 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
             novaRodada.setTipoRodada(tipoRodada);
             Carta cartaJogador1 = this.jogador1.proximaCarta();
             Carta cartaJogador2 = this.jogador2.proximaCarta();
-            Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
-                    .log(Level.INFO, String.format("Nova rodada | Rodada número %d\n", this.getRodadas() == null ? 1 : this.getRodadas().size() + 1));
-            Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
-                    .log(Level.INFO, String.format("%s contra %s\n", this.jogador1, this.jogador2));
-            this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
-            novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
-            novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
-            this.adicionaRodadaNaPartida(novaRodada);
-            this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
+            if (cartaJogador1 != null && cartaJogador2 != null) {
+                Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
+                        .log(Level.INFO, String.format("Nova rodada | Rodada número %d\n", this.getRodadas() == null ? 1 : this.getRodadas().size() + 1));
+                Logger.getLogger(SuperTrunfoDaReciclagemSimulacao.class.getName())
+                        .log(Level.INFO, String.format("%s contra %s\n", this.jogador1, this.jogador2));
+                this.adicionaCartasNaMesa(cartaJogador1, cartaJogador2);
+                novaRodada.defineResultadoRodada(cartaJogador1, cartaJogador2);
+                novaRodada.defineVencedorRodada(this.jogador1, this.jogador2);
+                this.adicionaRodadaNaPartida(novaRodada);
+                this.cartasNaMesaParaVencedorRodada(novaRodada.getVencedorRodada());
+            }
             this.verificaTerminoJogo();
         }
     }

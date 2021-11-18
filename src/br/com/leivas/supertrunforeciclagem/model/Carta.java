@@ -4,6 +4,7 @@ import br.com.leivas.supertrunforeciclagem.util.CorUtil;
 
 import java.io.Serializable;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Classe que representa uma carta abstrata no sistema
@@ -98,7 +99,7 @@ public abstract class Carta implements Serializable {
      * 0 se forem iguais e -1 se o @param carta for maior.
      */
     public int compareToEhReciclavel(Carta carta) {
-        return this.ehReciclavel() && carta.ehReciclavel() ? 0 : this.ehReciclavel() ? 1 : -1;
+        return this.ehReciclavel() && carta.ehReciclavel() ? 0 : !this.ehReciclavel() && !carta.ehReciclavel() ? 0 : this.ehReciclavel() ? 1 : -1;
     }
 
     /**
@@ -171,5 +172,18 @@ public abstract class Carta implements Serializable {
     @Override
     public String toString() {
         return String.format("--- #%s %s ---", this.codigo, this.nome.toUpperCase(Locale.ROOT));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carta carta = (Carta) o;
+        return codigo.equals(carta.codigo) && nome.equals(carta.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo, nome);
     }
 }
