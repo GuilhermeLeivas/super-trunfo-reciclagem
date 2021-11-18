@@ -29,7 +29,7 @@ public abstract class ISuperTrunfo {
     private List<Carta> cartasNaMesa;
     private StatusJogo statusJogo = StatusJogo.NAO_INICIADO;
 
-    abstract public void iniciaJogo(String nomeJogador1, String nomeJogador2, Rodada.TipoRodada tipoPrimeiraRodada);
+    abstract public void iniciaJogo(String nomeJogador1, String nomeJogador2);
 
     abstract public void proximaJogada(Rodada.TipoRodada tipoRodada);
 
@@ -92,5 +92,16 @@ public abstract class ISuperTrunfo {
      */
     protected Rodada ultimaRodada() {
         return this.rodadas.get(this.rodadas.size() - 1);
+    }
+
+    /**
+     * Clean info jogo anterior
+     */
+    protected void clean() {
+        this.rodadas = null;
+        this.baralho = null;
+        this.cartasNaMesa = null;
+        this.vencedorPartida = null;
+        this.statusJogo = StatusJogo.NAO_INICIADO;
     }
 }

@@ -26,7 +26,7 @@ public class SuperTrunfoDaReciclagemSimulacao {
         String nomeJogador1 = scanner.nextLine();
         System.out.println("Digite o nome do player 2\n");
         String nomeJogador2 = scanner.nextLine();*/
-        facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2, Rodada.TipoRodada.DECOMPOSICAO);
+        facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2);
         while (facadeSuperTrunfo.getStatusJogo() != ISuperTrunfo.StatusJogo.FINALIZADO) {
             Optional<Jogador> jogadorVencedor = facadeSuperTrunfo.vencedorUltimaRodada();
             Rodada.TipoRodada tipoProximaRodada;

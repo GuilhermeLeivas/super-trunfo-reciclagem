@@ -28,12 +28,11 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
      * Criar rodada inicial.
      * Alterar o status do jogo.
      *
-     * @param nomeJogador1       Nome do jogador1
-     * @param nomeJogador2       Nome do jogador2
-     * @param tipoPrimeiraRodada Escolha do primeiro tipo de rodada
+     * @param nomeJogador1 Nome do jogador1
+     * @param nomeJogador2 Nome do jogador2
      */
     @Override
-    public void iniciaJogo(String nomeJogador1, String nomeJogador2, Rodada.TipoRodada tipoPrimeiraRodada) {
+    public void iniciaJogo(String nomeJogador1, String nomeJogador2) {
         try {
             if (this.getStatusJogo() == StatusJogo.NAO_INICIADO) {
                 this.setBaralho(BaralhoFileReader.getInstance().readBaralhoFile());
@@ -45,7 +44,7 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
                 this.jogador2 = new Jogador(2, nomeJogador2,
                         this.adicionaCartasJogador(this.getBaralho(), numeroDeCartasPorJogador, numeroDeCartas));
                 this.setStatusJogo(StatusJogo.EM_ANDAMENTO);
-                this.proximaJogada(tipoPrimeiraRodada);
+                this.proximaJogada(this.jogador1.escolherRodadaRandomicamente());
             }
         } catch (Exception ex) {
             Logger.getLogger(SuperTrunfoDaReciclagem.class.getName()).log(Level.SEVERE, String.format("Falha ao iniciar jogo %s", ex.getMessage()));
@@ -91,7 +90,18 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
             this.setStatusJogo(StatusJogo.FINALIZADO);
             this.setVencedorPartida(jogador1TemTodasCartas ? this.jogador1 : this.jogador2);
             this.geraLogFimPartida();
+            this.clean();
         }
+    }
+
+    /**
+     * Clean info jogo anterior
+     */
+    @Override
+    protected void clean() {
+        super.clean();
+        this.jogador1 = null;
+        this.jogador2 = null;
     }
 
     /**
