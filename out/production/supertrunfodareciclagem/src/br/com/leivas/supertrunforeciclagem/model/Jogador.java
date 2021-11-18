@@ -33,7 +33,7 @@ public class Jogador {
      * @return True para caso tenha todas cartas, False caso não.
      */
     public boolean possuiTodasCartas(Baralho baralho) {
-        return this.temCartas() && this.numeroDeCartas() == baralho.tamanhoBaralho();
+        return this.temCartas() && this.getCartas().containsAll(baralho.getCartas());
     }
 
     public int numeroDeCartas() {

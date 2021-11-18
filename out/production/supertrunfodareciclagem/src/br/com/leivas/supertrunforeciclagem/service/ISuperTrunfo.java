@@ -41,7 +41,6 @@ public abstract class ISuperTrunfo {
     }
 
     public Jogador ultimoVencedorPartida() {
-        Rodada.TipoRodada proximaRodada;
         Optional<Rodada> ultiRodadaGanha = this.rodadas.stream()
                 .filter(rodada -> rodada.getVencedorRodada() != null)
                 .reduce((first, second) -> second);

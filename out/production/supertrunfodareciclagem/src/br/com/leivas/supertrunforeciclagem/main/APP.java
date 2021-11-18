@@ -19,7 +19,6 @@ public class APP extends Frame implements WindowListener,ActionListener {
         myWindow.setVisible(true);
     }
     public APP(String title) {
-
         super(title);
         setLayout(new FlowLayout());
         addWindowListener(this);
@@ -40,14 +39,14 @@ public class APP extends Frame implements WindowListener,ActionListener {
 
 
     }
-
+        //BOTAO FUNCIONAL
     public void actionPerformed(ActionEvent e) {
         String n1 = textName1.getText();
         String n2 = textName2.getText();
         String vencedor = SuperTrunfoDaReciclagemSimulacao.main(n1,n2);
         JOptionPane.showMessageDialog(null,vencedor);
     }
-
+        //WINDOW
     public void windowClosing(WindowEvent e) {
         dispose();
         System.exit(0);
