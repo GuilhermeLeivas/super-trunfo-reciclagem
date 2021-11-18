@@ -18,12 +18,13 @@ public class SuperTrunfoDaReciclagemSimulacao {
     public static void main(String[] args) {
 
         final ISuperTrunfo facadeSuperTrunfo = new SuperTrunfoDaReciclagem();
+        final RodadaUtil rodadaUtil = new RodadaUtil();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o nome do player 1\n");
         String nomeJogador1 = scanner.nextLine();
         System.out.println("Digite o nome do player 2\n");
         String nomeJogador2 = scanner.nextLine();
-        facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2, Rodada.TipoRodada.DECOMPOSICAO);
+        facadeSuperTrunfo.iniciaJogo(nomeJogador1, nomeJogador2,  rodadaUtil.randomTipoRodada());
         while (facadeSuperTrunfo.getStatusJogo() != ISuperTrunfo.StatusJogo.FINALIZADO) {
             Optional<Jogador> jogadorVencedor = facadeSuperTrunfo.vencedorUltimaRodada();
             Rodada.TipoRodada tipoProximaRodada;
@@ -33,7 +34,7 @@ public class SuperTrunfoDaReciclagemSimulacao {
                 Jogador ultimoVencedor = facadeSuperTrunfo.ultimoVencedorPartida();
                 tipoProximaRodada = ultimoVencedor != null ?
                         ultimoVencedor.escolherRodadaRandomicamente()
-                        : new RodadaUtil().randomTipoRodada();
+                        : rodadaUtil.randomTipoRodada();
             }
             facadeSuperTrunfo.proximaJogada(tipoProximaRodada);
         }
