@@ -40,6 +40,6 @@ public class SuperTrunfoDaReciclagemSimulacao {
             }
             facadeSuperTrunfo.proximaJogada(tipoProximaRodada);
         }
-    return ultimoVencedor.getNome();
+    return facadeSuperTrunfo.getVencedorPartida().getNome();
     }
 }
