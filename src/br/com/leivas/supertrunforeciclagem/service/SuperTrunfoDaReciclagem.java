@@ -167,5 +167,17 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
     private void geraLogFimPartida() {
         Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
                 .log(Level.INFO, "Vencedor da partida:" + this.getVencedorPartida());
+        this.logRodadasGanhas();
+    }
+
+    private void logRodadasGanhas() {
+        final long rodadasGanhasJogador1 = this.getRodadas().stream().filter(r -> r.getVencedorRodada() != null
+                && r.getVencedorRodada().equals(this.jogador1)).count();
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                .log(Level.INFO, String.format("%s rodadas ganhas pelo %s", rodadasGanhasJogador1, this.jogador1));
+        final long rodadasGanhasJogador2 = this.getRodadas().stream().filter(r -> r.getVencedorRodada() != null
+                && r.getVencedorRodada().equals(this.jogador2)).count();
+        Logger.getLogger(SuperTrunfoDaReciclagem.class.getName())
+                .log(Level.INFO, String.format("%s rodadas ganhas pelo %s", rodadasGanhasJogador2, this.jogador2));
     }
 }
