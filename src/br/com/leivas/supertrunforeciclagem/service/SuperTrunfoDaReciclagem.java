@@ -8,7 +8,6 @@ import br.com.leivas.supertrunforeciclagem.model.Jogador;
 import br.com.leivas.supertrunforeciclagem.model.Rodada;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -94,15 +93,6 @@ public class SuperTrunfoDaReciclagem extends ISuperTrunfo {
             this.geraLogFimPartida();
         }
     }
-
-    public Jogador getJogador1() {
-        return jogador1;
-    }
-
-    public Jogador getJogador2() {
-        return jogador2;
-    }
-
 
     /**
      * Adiciona as cartas para um jogador.
